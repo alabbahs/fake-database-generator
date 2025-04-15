@@ -2,18 +2,22 @@ import os
 import pandas as pd
 import json
 from split_tables import split_tables
+from fuzzy_matching import match_faker_function
+from faker import Faker
 
 INPUT_FOLDER = "data/split_tables"
 OUTPUT_FILE = "output_schema.json"
 
 def process_csv(file_path):
+    faker = Faker()
     df = pd.read_csv(file_path)
 
-    table_name = df["TableName"].iloc[0]
+    table_name = df["table_name"].iloc[0]
+    fake_data = match_faker_function(row["column_name"])
 
     fields = []
     for _, row in df.iterrows():
-        field = {"name": row["Column"], "type": type(row["max"]).__name__}
+        field = {"name": row["column_name"], "type": row["full_data_type"], "fake_data": fake_data}
         fields.append(field)
 
     return {
