@@ -17,6 +17,6 @@ def match_faker_function(field_name: str) -> str:
     return best_match
 
 if __name__ == "__main__":
-    field_name = "voicemail"
+    field_name = "name"
     matched_function = match_faker_function(field_name)
     print(f"Matched Faker function for '{field_name}': {matched_function}")
