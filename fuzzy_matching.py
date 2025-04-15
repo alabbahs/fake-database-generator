@@ -21,7 +21,7 @@ def match_faker_function(field_name: str) -> str | None:
     )
     
     score = fuzz.ratio(field_name.lower(), best_match.lower())
-    if score >= 80:
+    if score >= 60:
         try:
             return getattr(faker, best_match)()
         except Exception as e:

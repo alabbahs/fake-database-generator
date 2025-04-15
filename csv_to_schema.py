@@ -13,17 +13,22 @@ def process_csv(file_path):
     df = pd.read_csv(file_path)
 
     table_name = df["table_name"].iloc[0]
-    fake_data = match_faker_function(row["column_name"])
 
     fields = []
     for _, row in df.iterrows():
-        field = {"name": row["column_name"], "type": row["full_data_type"], "fake_data": fake_data}
+        fake_data = match_faker_function(row["column_name"])  
+        field = {
+            "name": row["column_name"],
+            "type": row["full_data_type"],
+            "fake_data": str(fake_data)
+        }
         fields.append(field)
 
     return {
         "table_name": table_name,
         "fields": fields
     }
+
 
 def main():
     all_tables = []
