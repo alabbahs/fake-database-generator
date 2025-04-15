@@ -4,12 +4,10 @@ from fuzzywuzzy import fuzz
 def match_faker_function(field_name: str) -> str:
     faker = Faker()
     
-    excluded = {"seed", "seed_instance"}
-    
     faker_functions = [
         attr for attr in dir(faker)
         if not attr.startswith("_")
-        and attr not in excluded
+        and attr not in {"seed", "seed_instance"}
         and callable(getattr(faker, attr, None))
     ]
     
@@ -17,6 +15,8 @@ def match_faker_function(field_name: str) -> str:
     return best_match
 
 if __name__ == "__main__":
+    faker = Faker()
     field_name = "name"
     matched_function = match_faker_function(field_name)
     print(f"Matched Faker function for '{field_name}': {matched_function}")
+    print(getattr(faker, matched_function)())
